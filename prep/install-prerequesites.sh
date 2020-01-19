@@ -32,19 +32,21 @@ function _error {
 }
 
 
-# Find the right package manager.
+# Find the right package manager. Assumes they don't overlap.
 if has apt ; then
     # Debian/Ubuntu variant.
     apt update
     apt upgrade -y
     apt autoremove -y
-    apt install -y texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev
-    apt-mark auto texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev
+    apt install -y texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev build-essential automake clang libclang-dev
+    apt-mark auto texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev build-essential automake clang libclang-dev
 elif has dnf ; then
     # Fedoare Core variant.
     dnf upgrade --refresh
     # Needs testing
-    dnf install texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev
+    dnf install texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev build-essential automake clang libclang-dev
+elif has brew ; then
+    brew install gnutls texinfo autoconf
 else
     # Arch and all the rest. Tbs.
     _error "'$(lsb_release -sd 2>/dev/null || uname -a)' package manager? Stopping..."
