@@ -3,10 +3,10 @@
 # Make it a little easier to install prerequisites to compilation. Currently ubuntu and fedora only.
 # usage: bash $(git rev-parse --show-toplevel)/prep/install-prerequisites.sh
 
-# TODO mike@carif.io: variants in python3, typescript?
-
 me=$(realpath ${BASH_SOURCE:-$0})
 here=$(dirname ${me})
+
+
 
 
 # Are we root yet?
@@ -32,6 +32,8 @@ function _error {
 }
 
 
+cat ${here}/README.md
+
 # Find the right package manager. Assumes they don't overlap.
 if has apt ; then
     # Debian/Ubuntu variant.
@@ -43,12 +45,11 @@ if has apt ; then
 elif has dnf ; then
     # Fedoare Core variant.
     dnf upgrade --refresh
-    # Needs testing
     dnf -y install texinfo libjpeg-turbo-devel libtiff-devel giflib-devel libXpm-devel gtk3-devel gnutls-devel ncurses-devel libxml2-devel libXt-devel @development-tools automake clang clang-devel
 elif has brew ; then
     brew install gnutls texinfo autoconf
 else
-    # Arch and all the rest. Tbs.
+    # Arch and all the rest, not yet supported.
     _error "'$(lsb_release -sd 2>/dev/null || uname -a)' package manager? Stopping..."
 fi
 
