@@ -21,7 +21,7 @@ fi
 function has {
     local _exec=${1:?'expecting a program'}
     local _version=${2:-'--version'}
-    ${_exec} ${_version} 2>&1 1>/dev/null
+    1>/dev/null 2>&1 ${_exec} ${_version}
 }
 
 # Exit with a message and status code 1.
@@ -44,7 +44,7 @@ elif has dnf ; then
     # Fedoare Core variant.
     dnf upgrade --refresh
     # Needs testing
-    dnf install texinfo libjpeg-dev libtiff-dev  libgif-dev libxpm-dev libgtk-3-dev gnutls-dev libncurses5-dev libxml2-dev libxt-dev build-essential automake clang libclang-dev
+    dnf -y install texinfo libjpeg-turbo-devel libtiff-devel giflib-devel libXpm-devel gtk3-devel gnutls-devel ncurses-devel libxml2-devel libXt-devel @development-tools automake clang clang-devel
 elif has brew ; then
     brew install gnutls texinfo autoconf
 else
